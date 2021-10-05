@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="./assets/styles/style.css">
+</head>
+<body>
+    <header>
+        <div class="high-score"><a href='#high-score'>View high scores</a></div>
+        <div class="timer">Time: 00</div>
+    </header>
+
+    <section class='section' id="intro">
+        <h2 class="section-title">Coding Quiz Challenge</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quas officia dicta, nemo nesciunt magni quod nam. Iure animi exercitationem in facere necessitatibus numquam! Alias ullam, voluptatibus quae, numquam cupiditate ex quam iste sunt odio, quis maxime magni mollitia hic?</p>
+        <button class='btn' id="start-quiz">Start Quiz</button>
+    </section>
+    <section class='section' id="question">
+        <h2 class="section-title">Question Here</h2>
+        <div class='answers'>
+            <button class='btn' id='btn-q1'>q1</button>
+            <button class='btn' id='btn-q2'>q2</button>
+            <button class='btn' id='btn-q3'>q3</button>
+            <button class='btn' id='btn-q4'>q4</button>
+        </div>
+        <div id="answer-ok">Wrong!</div>
+    </section>
+    <section class='section' id="result">
+        <h2 class="section-title">All done!</h2>
+        <div id='final-score'>
+            <label for="initials">Enter initials</label>
+            <input type="text" name="initials" id="initials">
+            <button type="submit">Submit</button>
+        </div
+    </section>
+    <section class='section' id="high-scores">
+        <h2 class="section-title">High Scores</h2>
+        <list>
+            <ol>
+                <li>TB</li>
+            </ol>
+        </list>
+        <div>
+            <button class="clear">Reset high scores</button>
+            <button class="restart">Restart quiz</button>
+        </div>
+    </section>
+    <script src="./assets/scripts/script.js"></script>
+</body>
+</html>
