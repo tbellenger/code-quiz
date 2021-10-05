@@ -8,34 +8,48 @@
     <link rel="stylesheet" href="./assets/styles/style.css">
 </head>
 <body>
+    <!-- Header showing high score link and timer -->
     <header>
-        <div class="high-score"><a href='#high-score'>View high scores</a></div>
-        <div class="timer">Time: 00</div>
+        <div class="high-score" id='high-score'><a href='#high-score'>View high scores</a></div>
+        <div class="timer" id='timer'>Time: 0</div>
     </header>
 
+    <!-- Introduction to the quiz with start button -->
     <section class='section' id="intro">
         <h2 class="section-title">Coding Quiz Challenge</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quas officia dicta, nemo nesciunt magni quod nam. Iure animi exercitationem in facere necessitatibus numquam! Alias ullam, voluptatibus quae, numquam cupiditate ex quam iste sunt odio, quis maxime magni mollitia hic?</p>
         <button class='btn' id="start-quiz">Start Quiz</button>
     </section>
-    <section class='section' id="question">
-        <h2 class="section-title">Question Here</h2>
+
+    <!-- Questions will be filled in here
+        Each question should have the question 
+        followed by four choices that are clickable
+        buttons. If the right answer is clicked it 
+        displays 'Correct!' and if the wrong answer
+        it displays 'Wrong!' -->
+    <section class='section' id="questions">
+        <h2 class="section-title question">Question Here</h2>
         <div class='answers'>
             <button class='btn' id='btn-q1'>q1</button>
             <button class='btn' id='btn-q2'>q2</button>
             <button class='btn' id='btn-q3'>q3</button>
             <button class='btn' id='btn-q4'>q4</button>
         </div>
-        <div id="answer-ok">Wrong!</div>
+        <div id="answer">Wrong!</div>
     </section>
+
+    <!-- Once all questions are answered or if time runs
+        out then this section is displayed allowing to 
+        store the initials of the player -->
     <section class='section' id="result">
         <h2 class="section-title">All done!</h2>
         <div id='final-score'>
             <label for="initials">Enter initials</label>
-            <input type="text" name="initials" id="initials">
-            <button type="submit">Submit</button>
-        </div
+            <input type="text" name="initials" id="initials" />
+            <button class='btn' type="submit">Submit</button>
+        </div>
     </section>
+
     <section class='section' id="high-scores">
         <h2 class="section-title">High Scores</h2>
         <list>
@@ -44,10 +58,11 @@
             </ol>
         </list>
         <div>
-            <button class="clear">Reset high scores</button>
-            <button class="restart">Restart quiz</button>
+            <button class='btn' id="clear">Reset high scores</button>
+            <button class='btn' id="restart">Restart quiz</button>
         </div>
     </section>
+
     <script src="./assets/scripts/script.js"></script>
 </body>
 </html>
