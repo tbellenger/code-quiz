@@ -30,10 +30,10 @@
     <section class='section' id="questions">
         <h2 class="section-title" id='question'>Question Here</h2>
         <div class='answers'>
-            <button class='btn' id='btn-q1'>q1</button>
-            <button class='btn' id='btn-q2'>q2</button>
-            <button class='btn' id='btn-q3'>q3</button>
-            <button class='btn' id='btn-q4'>q4</button>
+            <button class='btn ans' id='btn-q1'>q1</button>
+            <button class='btn ans' id='btn-q2'>q2</button>
+            <button class='btn ans' id='btn-q3'>q3</button>
+            <button class='btn ans' id='btn-q4'>q4</button>
         </div>
         <div id="answer">Wrong!</div>
     </section>
@@ -44,6 +44,7 @@
     <section class='section' id="result">
         <h2 class="section-title">All done!</h2>
         <div id='final-score'>
+            <p>Your final score is:<span id='final-score-span'></span></p>
             <label for="initials">Enter initials</label>
             <input type="text" name="initials" id="initials" />
             <button class='btn' type="submit">Submit</button>

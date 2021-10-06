@@ -1,11 +1,14 @@
-var one = {title:'Title1', answers:['11','12','13','14'], correct:1};
-var two = {title:'Title2', answers:['21','22','23','24'], correct:2};
-var three = {title:'Title3', answers:['31','32','33','34'], correct:3};
-var four = {title:'Title4', answers:['41','42','43','44'], correct:4};
+// 
+var one = {title:'Arrays in JavaScript can be used to store ___________', answers:['1. Numbers & Strings','2. Other Arrays','3. Booleans','4. All of the above'], correct:4};
+var two = {title:'Commonly used datatypes DO not include', answers:['1. Strings','2. Booleans','3. Alerts','4. Numbers'], correct:3};
+var three = {title:'String values must be enclosed between _______ when being assigned to variables', answers:['Commas','Curly Brackets','Quotes','Parenthisis'], correct:3};
+var four = {title:'The condition in an if/else statement is enclosed between', answers:['1. Curly Braces','2. Quotes','3. Square Brackets','4. Parenthisis'], correct:4};
 
 var currQuestion = one;
 var currTime = 0;
 
+// Question array just to make it easy to store questions
+// shuffle them for each round and to get the next question
 var questionArr = {
     currQuestionIndex: 0,
     questions:[],
@@ -21,7 +24,6 @@ var questionArr = {
     },
     getNextQuestion: function() {
         if (this.currQuestionIndex >= this.questions.length) {
-            console.log('All questions asked - return null');
             return null;
         } else {
             this.currQuestionIndex++;
@@ -30,12 +32,13 @@ var questionArr = {
     }
 };
 
+// Initialize - push the questions into the 
+// question array and hide a bunch of sections
 var init = function() {
     questionArr.questions.push(one);
     questionArr.questions.push(two);
     questionArr.questions.push(three);
     questionArr.questions.push(four);
-    questionArr.shuffleQuestions();
 
     sectionQuestionsEl.style.display = 'none';
     sectionResultEl.style.display = 'none';
@@ -43,6 +46,8 @@ var init = function() {
     ansEl.style.display = 'none';
 } 
 
+// link up all the document elements to variables to be
+// able to access them in javascript
 var questionTitleEl = document.getElementById('question');
 var btnQ1El = document.getElementById('btn-q1');
 var btnQ2El = document.getElementById('btn-q2');
@@ -50,12 +55,20 @@ var btnQ3El = document.getElementById('btn-q3');
 var btnQ4El = document.getElementById('btn-q4');
 var timerEl = document.getElementById('timer');
 var ansEl = document.getElementById('answer');
+var finalscoreSpanEl = document.getElementById('final-score-span');
 var sectionIntroEl = document.getElementById('intro');
 var sectionQuestionsEl = document.getElementById('questions');
 var sectionResultEl = document.getElementById('result');
 var sectionHighScoresEl = document.getElementById('high-scores');
 var btnStartQuiz = document.getElementById('start-quiz');
 
+// Checks to see whether the correct answer button was clicked
+// by comparing the answer button id to the correct answer number
+// This will break if the answer button id's are changed
+// Where the wrong answer is selected the time penalty is applied
+// uses set timeout to display whether the answer was correct or wrong
+// for one second. Checks whether all questions are done to move to 
+// display all done screen
 const handleQuestionButtonClick = (event) => {
     if (event.target.getAttribute('id').endsWith(currQuestion.correct)) {
         console.log('correct');
@@ -66,58 +79,93 @@ const handleQuestionButtonClick = (event) => {
         ansEl.textContent = "Wrong!";
         ansEl.style.display = 'inline';
         currTime -= 10;
+        timerEl.textContent = currTime;
     }
-    setTimeout(function() {
-        displayCurrentQuestion();
-    }, 1000);
+    currQuestion = questionArr.getNextQuestion();
+    if (currQuestion != null) {
+        setTimeout(function() {
+            displayCurrentQuestion();
+        }, 1000);
+    } else {
+        stopTimer();
+        setTimeout(function() {
+            displayAllDone();
+        }, 1000);
+    }
 }
 
+// add question button handlers to the question buttons
 btnQ1El.addEventListener('click', handleQuestionButtonClick);
 btnQ2El.addEventListener('click', handleQuestionButtonClick);
 btnQ3El.addEventListener('click', handleQuestionButtonClick);
 btnQ4El.addEventListener('click', handleQuestionButtonClick);
 
+// Displays the current question and the possible answers 
+// for the user to select their response
+// question buttons have their text updated with possible
+// answers
 var displayCurrentQuestion = function() {
-    currQuestion = questionArr.getNextQuestion();
-    if (currQuestion != null) {
-        ansEl.style.display = 'none';
-        sectionQuestionsEl.style.display = 'flex';
-        questionTitleEl.textContent = currQuestion.title;
-        btnQ1El.textContent = currQuestion.answers[0];
-        btnQ2El.textContent = currQuestion.answers[1];
-        btnQ3El.textContent = currQuestion.answers[2];
-        btnQ4El.textContent = currQuestion.answers[3];
-    } else {
-        console.log('All questions completed');
-        stopTimer();
-    }
+    ansEl.style.display = 'none';
+    sectionQuestionsEl.style.display = 'flex';
+    questionTitleEl.textContent = currQuestion.title;
+    btnQ1El.textContent = currQuestion.answers[0];
+    btnQ2El.textContent = currQuestion.answers[1];
+    btnQ3El.textContent = currQuestion.answers[2];
+    btnQ4El.textContent = currQuestion.answers[3];
 }
 
+// Hides and displays elements to move to the 
+// all done screen ready for user to store their 
+// initials. Final score is the time left on the 
+// countdown timer
+var displayAllDone = function() {
+    ansEl.style.display = 'none';
+    sectionQuestionsEl.style.display = 'none';
+    sectionResultEl.style.display = 'flex';
+    finalscoreSpanEl.textContent = currTime;
+}
+
+// resets the timer to it's start value
 var resetTimer = function() {
     timerEl.style.display = 'inline';
     currTime = 75;
 }
+
+// starts the timer, keeps track of the 
+// interval so that it can be stopped later
+// and updates the timer value on the screen
+// Where the timer reaches zero it is stopped
+// and move to all done screen
 var timerInterval;
 var startTimer = function() {
     timerInterval = setInterval(function() {
-        console.log('timer update ' + currTime);
-        timerEl.textContent = currTime;
         currTime--;
+        timerEl.textContent = currTime;
         if (currTime === 0) {
             stopTimer();
+            displayAllDone();
         }
     }, 1000);
 }
+
+// Uses stored timerInterval to 
+// stop the timer
 var stopTimer = function() {
-    console.log('Stopped timer');
     clearInterval(timerInterval);
 }
 
+// This handles the first click on the start quiz button
+// It will reset and start the timer, shuffle questions and 
+// start to display questions
 btnStartQuiz.addEventListener('click', function() {
     sectionIntroEl.style.display = 'none';
+    questionArr.shuffleQuestions();
+    currQuestion = questionArr.getNextQuestion();
     resetTimer();
     startTimer();
     displayCurrentQuestion();
 });
 
+
+// Initialize page to hide everything and show intro and reset all
 init();
