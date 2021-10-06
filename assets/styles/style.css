@@ -33,11 +33,12 @@ header {
     width: 30%;
 }
 
+
 #answer {
     color: grey;
     font-size: 24px;
     border-top: 2px solid grey;
-
+    width: 100%;
 }
 
 .btn {
@@ -47,6 +48,10 @@ header {
     margin: 10px;
     border: 1px solid rgba(78, 61, 139, 0.767);
     border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: darkorchid;
 }
 
 /* 
