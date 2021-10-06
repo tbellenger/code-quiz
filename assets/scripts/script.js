@@ -1,7 +1,7 @@
 // 
 var one = {title:'Arrays in JavaScript can be used to store ___________', answers:['1. Numbers & Strings','2. Other Arrays','3. Booleans','4. All of the above'], correct:4};
 var two = {title:'Commonly used datatypes DO not include', answers:['1. Strings','2. Booleans','3. Alerts','4. Numbers'], correct:3};
-var three = {title:'String values must be enclosed between _______ when being assigned to variables', answers:['Commas','Curly Brackets','Quotes','Parenthisis'], correct:3};
+var three = {title:'String values must be enclosed between _______ when being assigned to variables', answers:['1. Commas','2. Curly Brackets','3. Quotes','4. Parenthisis'], correct:3};
 var four = {title:'The condition in an if/else statement is enclosed between', answers:['1. Curly Braces','2. Quotes','3. Square Brackets','4. Parenthisis'], correct:4};
 
 var currQuestion = one;
@@ -40,10 +40,10 @@ var init = function() {
     questionArr.questions.push(three);
     questionArr.questions.push(four);
 
-    sectionQuestionsEl.style.display = 'none';
-    sectionResultEl.style.display = 'none';
-    sectionHighScoresEl.style.display = 'none';
-    ansEl.style.display = 'none';
+//    sectionQuestionsEl.style.display = 'none';
+//    sectionResultEl.style.display = 'none';
+//    sectionHighScoresEl.style.display = 'none';
+//    ansEl.style.display = 'none';
 } 
 
 // link up all the document elements to variables to be
@@ -105,7 +105,7 @@ btnQ4El.addEventListener('click', handleQuestionButtonClick);
 // question buttons have their text updated with possible
 // answers
 var displayCurrentQuestion = function() {
-    ansEl.style.display = 'none';
+//    ansEl.style.display = 'none';
     sectionQuestionsEl.style.display = 'flex';
     questionTitleEl.textContent = currQuestion.title;
     btnQ1El.textContent = currQuestion.answers[0];
@@ -119,8 +119,8 @@ var displayCurrentQuestion = function() {
 // initials. Final score is the time left on the 
 // countdown timer
 var displayAllDone = function() {
-    ansEl.style.display = 'none';
-    sectionQuestionsEl.style.display = 'none';
+//    ansEl.style.display = 'none';
+//    sectionQuestionsEl.style.display = 'none';
     sectionResultEl.style.display = 'flex';
     finalscoreSpanEl.textContent = currTime;
 }
@@ -158,7 +158,7 @@ var stopTimer = function() {
 // It will reset and start the timer, shuffle questions and 
 // start to display questions
 btnStartQuiz.addEventListener('click', function() {
-    sectionIntroEl.style.display = 'none';
+//    sectionIntroEl.style.display = 'none';
     questionArr.shuffleQuestions();
     currQuestion = questionArr.getNextQuestion();
     resetTimer();
