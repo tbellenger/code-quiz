@@ -86,8 +86,6 @@ var updateHighScores = function() {
     });
 }
 
-
-
 // Checks to see whether the correct answer button was clicked
 // by comparing the answer button id to the correct answer number
 // This will break if the answer button id's are changed
@@ -206,6 +204,7 @@ const startQuizHandler = function() {
 
 const saveScoreHandler = function() {
     const initials = initialEl.value;
+    initialEl.value = '';
     initialArray = JSON.parse(store.getItem('highscores'));
     initialArray.push({'initial': initials, 'score': currTime});
     store.setItem('highscores', JSON.stringify(initialArray));
