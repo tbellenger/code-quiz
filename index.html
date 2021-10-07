@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Code Quiz</title>
-    <link rel="stylesheet" href="./assets/styles/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./assets/styles/style.css" />
+  </head>
+  <body>
     <!-- Header showing high score link and timer -->
     <header>
-        <div><a href='javascript:displayHighScores()'>View high scores</a></div>
-        <div class="timer">Time: <span id='timer'>0</span></div>
+      <div><a href="javascript:displayHighScores()">View high scores</a></div>
+      <div class="timer">Time: <span id="timer">0</span></div>
     </header>
 
     <!-- Introduction to the quiz with start button -->
-    <section class='section intro' id="intro">
-        <h2 class="section-title">Coding Quiz Challenge</h2>
-        <p>Try to answer the following code-related questions within the time limit. <br />
-            Keep in mind that incorrect answers will penalize your score/time <br />
-            by ten seconds!</p>
-        <button class='btn' id="start-quiz">Start Quiz</button>
+    <section class="section intro" id="intro">
+      <h2 class="section-title">Coding Quiz Challenge</h2>
+      <p>
+        Try to answer the following code-related questions within the time
+        limit. <br />
+        Keep in mind that incorrect answers will penalize your score/time <br />
+        by ten seconds!
+      </p>
+      <button class="btn" id="start-quiz">Start Quiz</button>
     </section>
 
     <!-- Questions will be filled in here
@@ -29,41 +32,39 @@
         buttons. If the right answer is clicked it 
         displays 'Correct!' and if the wrong answer
         it displays 'Wrong!' -->
-    <section class='section' id="questions">
-        <h2 class="section-title" id='question'>Question Here</h2>
-        <div class='answers'>
-            <button class='btn ans' id='btn-q1' data-response=1></button>
-            <button class='btn ans' id='btn-q2' data-response=2></button>
-            <button class='btn ans' id='btn-q3' data-response=3></button>
-            <button class='btn ans' id='btn-q4' data-response=4></button>
-        </div>
-        <div id="answer">Wrong!</div>
+    <section class="section" id="questions">
+      <h2 class="section-title" id="question">Question Here</h2>
+      <div class="answers">
+        <button class="btn ans" id="btn-q1" data-response="1"></button>
+        <button class="btn ans" id="btn-q2" data-response="2"></button>
+        <button class="btn ans" id="btn-q3" data-response="3"></button>
+        <button class="btn ans" id="btn-q4" data-response="4"></button>
+      </div>
+      <div id="answer">Wrong!</div>
     </section>
 
     <!-- Once all questions are answered or if time runs
         out then this section is displayed allowing to 
         store the initials of the player -->
-    <section class='section' id="result">
-        <h2 class="section-title">All done!</h2>
-        <div id='final-score'>
-            Your final score is:<span id='final-score-span'></span><br />
-            <label for="initials">Enter initials</label>
-            <input type="text" name="initials" id="initials" />
-            <button class='btn' id="save" type="submit">Submit</button>
-        </div>
+    <section class="section" id="result">
+      <h2 class="section-title">All done!</h2>
+      <div id="final-score">
+        Your final score is:<span id="final-score-span"></span><br />
+        <label for="initials">Enter initials</label>
+        <input type="text" name="initials" id="initials" />
+        <button class="btn" id="save" type="submit">Submit</button>
+      </div>
     </section>
 
-    <section class='section' id="high-scores">
-        <h2 class="section-title">High Scores</h2>
-        <ol id='score-list'>
-            
-        </ol>
-        <div>
-            <button class='btn' id="clear">Reset high scores</button>
-            <button class='btn' id="restart">Restart quiz</button>
-        </div>
+    <section class="section" id="high-scores">
+      <h2 class="section-title">High Scores</h2>
+      <ol id="score-list"></ol>
+      <div>
+        <button class="btn" id="clear">Reset high scores</button>
+        <button class="btn" id="restart">Restart quiz</button>
+      </div>
     </section>
 
     <script src="./assets/scripts/script.js"></script>
-</body>
+  </body>
 </html>
