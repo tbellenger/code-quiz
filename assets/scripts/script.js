@@ -7,6 +7,22 @@ var four = {title:'The condition in an if/else statement is enclosed between', a
 var currQuestion = one;
 var currTime = 0;
 
+// link up all the document elements to variables to be
+// able to access them in javascript
+var questionTitleEl = document.getElementById('question');
+var btnQ1El = document.getElementById('btn-q1');
+var btnQ2El = document.getElementById('btn-q2');
+var btnQ3El = document.getElementById('btn-q3');
+var btnQ4El = document.getElementById('btn-q4');
+var timerEl = document.getElementById('timer');
+var ansEl = document.getElementById('answer');
+var finalscoreSpanEl = document.getElementById('final-score-span');
+var sectionIntroEl = document.getElementById('intro');
+var sectionQuestionsEl = document.getElementById('questions');
+var sectionResultEl = document.getElementById('result');
+var sectionHighScoresEl = document.getElementById('high-scores');
+var btnStartQuiz = document.getElementById('start-quiz');
+
 // Question array just to make it easy to store questions
 // shuffle them for each round and to get the next question
 var questionArr = {
@@ -46,21 +62,7 @@ var init = function() {
 //    ansEl.style.display = 'none';
 } 
 
-// link up all the document elements to variables to be
-// able to access them in javascript
-var questionTitleEl = document.getElementById('question');
-var btnQ1El = document.getElementById('btn-q1');
-var btnQ2El = document.getElementById('btn-q2');
-var btnQ3El = document.getElementById('btn-q3');
-var btnQ4El = document.getElementById('btn-q4');
-var timerEl = document.getElementById('timer');
-var ansEl = document.getElementById('answer');
-var finalscoreSpanEl = document.getElementById('final-score-span');
-var sectionIntroEl = document.getElementById('intro');
-var sectionQuestionsEl = document.getElementById('questions');
-var sectionResultEl = document.getElementById('result');
-var sectionHighScoresEl = document.getElementById('high-scores');
-var btnStartQuiz = document.getElementById('start-quiz');
+
 
 // Checks to see whether the correct answer button was clicked
 // by comparing the answer button id to the correct answer number
@@ -69,7 +71,8 @@ var btnStartQuiz = document.getElementById('start-quiz');
 // uses set timeout to display whether the answer was correct or wrong
 // for one second. Checks whether all questions are done to move to 
 // display all done screen
-const handleQuestionButtonClick = (event) => {
+//const handleQuestionButtonClick = (event) => {
+const handleQuestionButtonClick = function(event) {
     if (event.target.getAttribute('id').endsWith(currQuestion.correct)) {
         console.log('correct');
         ansEl.textContent = "Correct!";
