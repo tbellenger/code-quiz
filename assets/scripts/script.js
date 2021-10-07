@@ -8,6 +8,7 @@ var currQuestion = one;
 var currTime = 0;
 var store = window.localStorage;
 var initialArray;
+var blockClick = false; 
 
 // link up all the document elements to variables to be
 // able to access them in javascript
@@ -95,6 +96,9 @@ var updateHighScores = function() {
 // display all done screen
 //const handleQuestionButtonClick = (event) => {
 const handleQuestionButtonClick = function(event) {
+    if (blockClick) {
+        return;
+    }
     if (event.target.dataset.response == currQuestion.correct) {
         console.log('correct');
         ansEl.textContent = "Correct!";
@@ -107,13 +111,16 @@ const handleQuestionButtonClick = function(event) {
         timerEl.textContent = currTime;
     }
     currQuestion = questionArr.getNextQuestion();
+    blockClick = true;
     if (currQuestion != null) {
         setTimeout(function() {
+            blockClick = false;
             displayCurrentQuestion();
         }, 1000);
     } else {
         stopTimer();
         setTimeout(function() {
+            blockClick = false;
             displayAllDone();
         }, 1000);
     }
