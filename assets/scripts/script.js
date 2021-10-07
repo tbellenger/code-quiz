@@ -6,6 +6,8 @@ var four = {title:'The condition in an if/else statement is enclosed between', a
 
 var currQuestion = one;
 var currTime = 0;
+var store = window.localStorage;
+var initialArray;
 
 // link up all the document elements to variables to be
 // able to access them in javascript
@@ -22,6 +24,11 @@ var sectionQuestionsEl = document.getElementById('questions');
 var sectionResultEl = document.getElementById('result');
 var sectionHighScoresEl = document.getElementById('high-scores');
 var btnStartQuiz = document.getElementById('start-quiz');
+var btnRestartQuiz = document.getElementById('restart');
+var btnSaveScore = document.getElementById('save');
+var btnResetScore = document.getElementById('clear');
+var initialEl = document.getElementById('initials');
+var orderlistHighScoresEl = document.getElementById('score-list');
 
 // Question array just to make it easy to store questions
 // shuffle them for each round and to get the next question
@@ -55,12 +62,29 @@ var init = function() {
     questionArr.questions.push(two);
     questionArr.questions.push(three);
     questionArr.questions.push(four);
+    updateHighScores();
 
-//    sectionQuestionsEl.style.display = 'none';
-//    sectionResultEl.style.display = 'none';
-//    sectionHighScoresEl.style.display = 'none';
-//    ansEl.style.display = 'none';
-} 
+    sectionQuestionsEl.style.display = 'none';
+    sectionResultEl.style.display = 'none';
+    sectionHighScoresEl.style.display = 'none';
+    ansEl.style.display = 'none';
+}
+
+var updateHighScores = function() {
+    initialArray = JSON.parse(store.getItem('highscores'));
+    if (initialArray == null) {
+        initialArray = [];
+        store.setItem('highscores',JSON.stringify(initialArray));
+    }
+    initialArray.sort((a, b) => b.score - a.score);
+    orderlistHighScoresEl.textContent = '';
+    initialArray.forEach(function(value) {
+        var node = document.createElement('li')
+        var txtNode = document.createTextNode(value.initial + ":" + value.score);
+        node.appendChild(txtNode);
+        orderlistHighScoresEl.appendChild(node);
+    });
+}
 
 
 
@@ -73,7 +97,7 @@ var init = function() {
 // display all done screen
 //const handleQuestionButtonClick = (event) => {
 const handleQuestionButtonClick = function(event) {
-    if (event.target.getAttribute('id').endsWith(currQuestion.correct)) {
+    if (event.target.dataset.response == currQuestion.correct) {
         console.log('correct');
         ansEl.textContent = "Correct!";
         ansEl.style.display = 'inline';
@@ -108,7 +132,9 @@ btnQ4El.addEventListener('click', handleQuestionButtonClick);
 // question buttons have their text updated with possible
 // answers
 var displayCurrentQuestion = function() {
-//    ansEl.style.display = 'none';
+    ansEl.style.display = 'none';
+    sectionIntroEl.style.display = 'none';
+    sectionHighScoresEl.style.display = 'none';
     sectionQuestionsEl.style.display = 'flex';
     questionTitleEl.textContent = currQuestion.title;
     btnQ1El.textContent = currQuestion.answers[0];
@@ -122,10 +148,18 @@ var displayCurrentQuestion = function() {
 // initials. Final score is the time left on the 
 // countdown timer
 var displayAllDone = function() {
-//    ansEl.style.display = 'none';
-//    sectionQuestionsEl.style.display = 'none';
+    ansEl.style.display = 'none';
+    sectionQuestionsEl.style.display = 'none';
     sectionResultEl.style.display = 'flex';
     finalscoreSpanEl.textContent = currTime;
+}
+
+var displayHighScores = function() {
+    ansEl.style.display = 'none';
+    sectionQuestionsEl.style.display = 'none';
+    sectionResultEl.style.display = 'none';
+    sectionIntroEl.style.display = 'none';
+    sectionHighScoresEl.style.display = 'flex';
 }
 
 // resets the timer to it's start value
@@ -160,15 +194,34 @@ var stopTimer = function() {
 // This handles the first click on the start quiz button
 // It will reset and start the timer, shuffle questions and 
 // start to display questions
-btnStartQuiz.addEventListener('click', function() {
+const startQuizHandler = function() {
 //    sectionIntroEl.style.display = 'none';
+//    sectionHighScore.style.display = 'none';
     questionArr.shuffleQuestions();
     currQuestion = questionArr.getNextQuestion();
     resetTimer();
     startTimer();
     displayCurrentQuestion();
-});
+};
 
+const saveScoreHandler = function() {
+    const initials = initialEl.value;
+    initialArray = JSON.parse(store.getItem('highscores'));
+    initialArray.push({'initial': initials, 'score': currTime});
+    store.setItem('highscores', JSON.stringify(initialArray));
+    updateHighScores();
+    displayHighScores();
+};
+
+const resetHighScoreHandler = function() {
+    store.setItem('highscores', JSON.stringify([]));
+    updateHighScores();
+}
+
+btnStartQuiz.addEventListener('click', startQuizHandler);
+btnRestartQuiz.addEventListener('click', startQuizHandler);
+btnSaveScore.addEventListener('click', saveScoreHandler);
+btnResetScore.addEventListener('click', resetHighScoreHandler);
 
 // Initialize page to hide everything and show intro and reset all
 init();
