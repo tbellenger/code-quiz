@@ -148,11 +148,9 @@ const handleQuestionButtonClick = function (event) {
   }
   // compare the dataset stored response clicked to the correct answer
   if (event.target.dataset.response == currQuestion.correct) {
-    console.log("correct");
     ansEl.textContent = "Correct!";
     ansEl.style.display = "inline";
   } else {
-    console.log("wrong");
     ansEl.textContent = "Wrong!";
     ansEl.style.display = "inline";
     currTime -= 10;
@@ -240,7 +238,6 @@ var startTimer = function () {
   timerInterval = setInterval(function () {
     currTime--;
     timerEl.textContent = currTime;
-    console.log(currTime);
     if (currTime === 0) {
       stopTimer();
       displayAllDone();
