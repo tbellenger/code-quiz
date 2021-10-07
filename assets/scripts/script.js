@@ -1,13 +1,15 @@
-// 
+// questions
 var one = {title:'Arrays in JavaScript can be used to store ___________', answers:['1. Numbers & Strings','2. Other Arrays','3. Booleans','4. All of the above'], correct:4};
 var two = {title:'Commonly used datatypes DO not include', answers:['1. Strings','2. Booleans','3. Alerts','4. Numbers'], correct:3};
 var three = {title:'String values must be enclosed between _______ when being assigned to variables', answers:['1. Commas','2. Curly Brackets','3. Quotes','4. Parenthisis'], correct:3};
 var four = {title:'The condition in an if/else statement is enclosed between', answers:['1. Curly Braces','2. Quotes','3. Square Brackets','4. Parenthisis'], correct:4};
+var five = {title:'A very useful tool used during development and debugging for printing content to the debugger is:', answers:['1. JavaScript', '2. terminal/bash', '3. for loops', '4. console.log'], correct:4};
 
 var currQuestion = one;
 var currTime = 0;
 var store = window.localStorage;
 var initialArray;
+var blockClick = false; 
 
 // link up all the document elements to variables to be
 // able to access them in javascript
@@ -45,8 +47,10 @@ var questionArr = {
         }
         this.currQuestionIndex = 0;
     },
+    // gets the next question in the array or returns null when no more
     getNextQuestion: function() {
         if (this.currQuestionIndex >= this.questions.length) {
+            this.currQuestionIndex = 0;
             return null;
         } else {
             this.currQuestionIndex++;
@@ -62,6 +66,7 @@ var init = function() {
     questionArr.questions.push(two);
     questionArr.questions.push(three);
     questionArr.questions.push(four);
+    questionArr.questions.push(five);
     updateHighScores();
 
     sectionQuestionsEl.style.display = 'none';
@@ -70,23 +75,26 @@ var init = function() {
     ansEl.style.display = 'none';
 }
 
+// read scores from local store 
 var updateHighScores = function() {
+    // read local store for highscores array object
     initialArray = JSON.parse(store.getItem('highscores'));
+    // if it is first use the just set to an empty array object
     if (initialArray == null) {
         initialArray = [];
         store.setItem('highscores',JSON.stringify(initialArray));
     }
+    // sort the scores from high to low
     initialArray.sort((a, b) => b.score - a.score);
+    // remove any text already in the ordered list and then loop through the array to add the scores as list items
     orderlistHighScoresEl.textContent = '';
     initialArray.forEach(function(value) {
         var node = document.createElement('li')
-        var txtNode = document.createTextNode(value.initial + ":" + value.score);
+        var txtNode = document.createTextNode(value.initial + " - " + value.score);
         node.appendChild(txtNode);
         orderlistHighScoresEl.appendChild(node);
     });
 }
-
-
 
 // Checks to see whether the correct answer button was clicked
 // by comparing the answer button id to the correct answer number
@@ -97,6 +105,12 @@ var updateHighScores = function() {
 // display all done screen
 //const handleQuestionButtonClick = (event) => {
 const handleQuestionButtonClick = function(event) {
+    // displaying 'correct' or 'wrong' so block input clicks until
+    // moving to next question
+    if (blockClick) {
+        return;
+    }
+    // compare the dataset stored response clicked to the correct answer
     if (event.target.dataset.response == currQuestion.correct) {
         console.log('correct');
         ansEl.textContent = "Correct!";
@@ -108,14 +122,22 @@ const handleQuestionButtonClick = function(event) {
         currTime -= 10;
         timerEl.textContent = currTime;
     }
+    // grab the next question data
     currQuestion = questionArr.getNextQuestion();
+    // block clicks while notifying of correct or wrong
+    blockClick = true;
     if (currQuestion != null) {
         setTimeout(function() {
+            // unblock clicks and display the next question after a 1 sec pause
+            blockClick = false;
             displayCurrentQuestion();
         }, 1000);
     } else {
+        // no more questions
         stopTimer();
         setTimeout(function() {
+            // unblock clicks and display all done screen after 1 sec pause
+            blockClick = false;
             displayAllDone();
         }, 1000);
     }
@@ -148,13 +170,17 @@ var displayCurrentQuestion = function() {
 // initials. Final score is the time left on the 
 // countdown timer
 var displayAllDone = function() {
+    sectionHighScoresEl.style.display = 'none';
     ansEl.style.display = 'none';
     sectionQuestionsEl.style.display = 'none';
     sectionResultEl.style.display = 'flex';
     finalscoreSpanEl.textContent = currTime;
 }
 
+// hide everything except high scores
 var displayHighScores = function() {
+    stopTimer();
+    resetTimer();
     ansEl.style.display = 'none';
     sectionQuestionsEl.style.display = 'none';
     sectionResultEl.style.display = 'none';
@@ -178,6 +204,7 @@ var startTimer = function() {
     timerInterval = setInterval(function() {
         currTime--;
         timerEl.textContent = currTime;
+        console.log(currTime);
         if (currTime === 0) {
             stopTimer();
             displayAllDone();
@@ -195,8 +222,6 @@ var stopTimer = function() {
 // It will reset and start the timer, shuffle questions and 
 // start to display questions
 const startQuizHandler = function() {
-//    sectionIntroEl.style.display = 'none';
-//    sectionHighScore.style.display = 'none';
     questionArr.shuffleQuestions();
     currQuestion = questionArr.getNextQuestion();
     resetTimer();
@@ -204,8 +229,11 @@ const startQuizHandler = function() {
     displayCurrentQuestion();
 };
 
+// Save the score to local storage
 const saveScoreHandler = function() {
-    const initials = initialEl.value;
+    // guess we should check initials doesn't go to long but just trim for the moment
+    const initials = initialEl.value.trim();
+    initialEl.value = '';
     initialArray = JSON.parse(store.getItem('highscores'));
     initialArray.push({'initial': initials, 'score': currTime});
     store.setItem('highscores', JSON.stringify(initialArray));
@@ -213,11 +241,13 @@ const saveScoreHandler = function() {
     displayHighScores();
 };
 
+// Clear local storage to empty and update page with cleared scores
 const resetHighScoreHandler = function() {
     store.setItem('highscores', JSON.stringify([]));
     updateHighScores();
 }
 
+// add event listeners and handlers to clicks
 btnStartQuiz.addEventListener('click', startQuizHandler);
 btnRestartQuiz.addEventListener('click', startQuizHandler);
 btnSaveScore.addEventListener('click', saveScoreHandler);

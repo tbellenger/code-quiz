@@ -10,14 +10,16 @@
 <body>
     <!-- Header showing high score link and timer -->
     <header>
-        <div class="high-score" id='high-score'><a href='javascript:displayHighScores()'>View high scores</a></div>
+        <div><a href='javascript:displayHighScores()'>View high scores</a></div>
         <div class="timer">Time: <span id='timer'>0</span></div>
     </header>
 
     <!-- Introduction to the quiz with start button -->
     <section class='section intro' id="intro">
         <h2 class="section-title">Coding Quiz Challenge</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quas officia dicta, nemo nesciunt magni quod nam. Iure animi exercitationem in facere necessitatibus numquam! Alias ullam, voluptatibus quae, numquam cupiditate ex quam iste sunt odio, quis maxime magni mollitia hic?</p>
+        <p>Try to answer the following code-related questions within the time limit. <br />
+            Keep in mind that incorrect answers will penalize your score/time <br />
+            by ten seconds!</p>
         <button class='btn' id="start-quiz">Start Quiz</button>
     </section>
 
@@ -30,10 +32,10 @@
     <section class='section' id="questions">
         <h2 class="section-title" id='question'>Question Here</h2>
         <div class='answers'>
-            <button class='btn ans' id='btn-q1' data-response=1>1. Dummy Answer that is long</button>
-            <button class='btn ans' id='btn-q2' data-response=2>2. Dummy short ans</button>
-            <button class='btn ans' id='btn-q3' data-response=3>3. Another answer medium</button>
-            <button class='btn ans' id='btn-q4' data-response=4>4. Very very very very long answer that may wrap if I make it really really long enough</button>
+            <button class='btn ans' id='btn-q1' data-response=1></button>
+            <button class='btn ans' id='btn-q2' data-response=2></button>
+            <button class='btn ans' id='btn-q3' data-response=3></button>
+            <button class='btn ans' id='btn-q4' data-response=4></button>
         </div>
         <div id="answer">Wrong!</div>
     </section>
@@ -44,7 +46,7 @@
     <section class='section' id="result">
         <h2 class="section-title">All done!</h2>
         <div id='final-score'>
-            <p>Your final score is:<span id='final-score-span'></span></p>
+            Your final score is:<span id='final-score-span'></span><br />
             <label for="initials">Enter initials</label>
             <input type="text" name="initials" id="initials" />
             <button class='btn' id="save" type="submit">Submit</button>
@@ -53,11 +55,9 @@
 
     <section class='section' id="high-scores">
         <h2 class="section-title">High Scores</h2>
-        <list>
-            <ol id='score-list'>
-                <li>TB 43</li>
-            </ol>
-        </list>
+        <ol id='score-list'>
+            
+        </ol>
         <div>
             <button class='btn' id="clear">Reset high scores</button>
             <button class='btn' id="restart">Restart quiz</button>

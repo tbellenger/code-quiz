@@ -13,6 +13,11 @@ header {
     padding-bottom: 30px;
 }
 
+p {
+    margin: 0;
+    text-align:center;
+}
+
 /* sections in flex boxes */
 .section {
     display: flex;
@@ -27,7 +32,7 @@ header {
 
 /* h2 section titles */
 .section-title {
-
+    font-size: 24px;
 }
 
 .answers {
@@ -62,3 +67,21 @@ header {
 .btn:hover {
     background-color: darkorchid;
 }
+
+a {
+    color: rgb(208, 105, 255);
+}
+
+a:link {
+    text-decoration: none;
+}
+
+ol {
+    background-color: rgba(131, 116, 228, 0.493);
+    border:2px solid rgba(131, 116, 228, 0.493);
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
